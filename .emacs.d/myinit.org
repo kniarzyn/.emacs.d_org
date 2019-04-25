@@ -1,0 +1,32 @@
+#+STARTUP: overview 
+#+PROPERTY: header-args :comments yes :results silent
+* repos
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+
+#+END_SRC
+* interface tweaks
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-message t)
+  (setq make-backup-files nil) ; stop creating backup~ files
+  (setq auto-save-default nil) ; stop creating #autosave# files
+  (setq create-lockfiles nil)  ; stop creating .# files
+  (tool-bar-mode -1)
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (global-set-key (kbd "<f5>") 'revert-buffer)
+  (use-package which-key
+    :ensure t
+    :config
+    (which-key-mode))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ivy
+    :ensure t
+    :diminish (ivy-mode)
+    :bind (("C-x b" . ivy-switch-buffer))
+    :config
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-display-style 'fancy))
+#+END_SRC

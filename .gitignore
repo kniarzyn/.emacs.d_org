@@ -1,0 +1,4 @@
+.cache
+.emacs.d/myinit.el
+.emacs.d/recentf
+.emacs.d/elpa/*
