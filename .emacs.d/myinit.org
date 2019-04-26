@@ -1,32 +1,75 @@
 #+STARTUP: overview 
 #+PROPERTY: header-args :comments yes :results silent
-* repos
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+* initial tweaks
+** UI
+   #+BEGIN_SRC emacs-lisp
+     (setq inhibit-startup-message t)
+     (tool-bar-mode -1)
+   #+END_SRC
+** Look
+   #+BEGIN_SRC emacs-lisp
+     (set-frame-font "MonacoB Nerd Font Mono-13" nil t)
+     ;; (set-default-font "Fira Mono-11")
+     ;; (set-default-font "Inconsolata-14")
+     ;; (set-default-font "Hack-11")
+     (load-theme 'tsdh-light t)
+   #+END_SRC
 
-#+END_SRC
-* interface tweaks
-#+BEGIN_SRC emacs-lisp
-  (setq inhibit-startup-message t)
-  (setq make-backup-files nil) ; stop creating backup~ files
-  (setq auto-save-default nil) ; stop creating #autosave# files
-  (setq create-lockfiles nil)  ; stop creating .# files
-  (tool-bar-mode -1)
-  (fset 'yes-or-no-p 'y-or-n-p)
-  (global-set-key (kbd "<f5>") 'revert-buffer)
-  (use-package which-key
-    :ensure t
-    :config
-    (which-key-mode))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (setq make-backup-files nil) ; stop creating backup~ files
+     (setq auto-save-default nil) ; stop creating #autosave# files
+     (setq create-lockfiles nil)  ; stop creating .# files
 
-#+BEGIN_SRC emacs-lisp
-  (use-package ivy
-    :ensure t
-    :diminish (ivy-mode)
-    :bind (("C-x b" . ivy-switch-buffer))
-    :config
-    (ivy-mode 1)
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-display-style 'fancy))
-#+END_SRC
+     (fset 'yes-or-no-p 'y-or-n-p)
+     (global-set-key (kbd "<f5>") 'revert-buffer)
+
+     (show-paren-mode 1) 
+     (global-visual-line-mode 1) ;; Proper line wrapping
+     (use-package which-key
+       :ensure t
+       :config
+       (which-key-mode))
+
+     (use-package ivy
+	 :ensure t
+	 :diminish (ivy-mode)
+	 :bind (("C-x b" . ivy-switch-buffer))
+	 :config
+	 (ivy-mode 1)
+	 (setq ivy-use-virtual-buffers t)
+	 (setq ivy-display-style 'fancy))
+   #+END_SRC
+** Indenting
+   #+BEGIN_SRC emacs-lisp
+     (setq default-tab-width 2
+	   tab-width 2
+	   indent-tabs-mode t
+	   c-basic-offset 2
+	   default-major-mode 'text-mode
+	   transient-mark-mode t                  ;;Colors for selections (mark region)
+	   save-interprogram-paste-before-kill t
+	   inhibit-splash-screen t         ;; Disable splash screen
+	   visible-bell t                  ;; Flashes on error
+	   TeX-PDF-mode t                  ;; PDF mode (rather than DVI-mode)
+	   standard-indent 2
+	   package-enable-at-startup nil
+	   split-width-threshold 9999     ;; split horizontal always
+	   scroll-conservatively 20       ;; move minimum when cursor exits view, instead of recentering
+	   load-prefer-newer t) ;; Don't load outdated byte code
+   #+END_SRC
+* Magit
+  #+BEGIN_SRC emacs-lisp
+    (use-package magit
+      :ensure t
+      :bind ("C-c g" . 'magit-status))
+  #+END_SRC
+* ruby & ruby on rails
+  #+BEGIN_SRC emacs-lisp
+    (use-package enh-ruby-mode
+      :ensure t)
+  #+END_SRC
+* Docker & Docker Compose
+  #+BEGIN_SRC emacs-lisp
+    (use-package docker-compose-mode :ensure t)
+    (use-package dockerfile-mode :ensure t)
+  #+END_SRC
